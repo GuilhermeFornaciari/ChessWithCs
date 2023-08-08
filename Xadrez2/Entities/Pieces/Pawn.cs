@@ -14,7 +14,7 @@ namespace Xadrez2.Entities.Pieces
         public Pawn(Point position, ConsoleColor color) : base(position, color) 
         {
             Moved = false;
-            if (color == ConsoleColor.DarkBlue) Direction = 1; else Direction = -1;
+            if (color == ConsoleColor.DarkRed) Direction = 1; else Direction = -1;
             Name = "Pawn";
         }
         public override string ToString()
@@ -30,24 +30,24 @@ namespace Xadrez2.Entities.Pieces
             int Y = Position.Y;
 
             if (X != 0 &&
-                Chessboard[X - 1, Y + 1] != null && 
-                Chessboard[X - 1, Y + 1].IsEnemy(this))
+                Chessboard[X - 1, Y + (1 * Direction)] != null && 
+                Chessboard[X - 1, Y + (1 * Direction)].IsEnemy(this))
             {
-                movements.Add(new Point(X-1, Y + 1));
+                movements.Add(new Point(X-1, Y + (1 * Direction)));
             }
 
             if (X != 7 &&
-                Chessboard[X + 1, Y + 1] != null &&
-                Chessboard[X + 1, Y + 1].IsEnemy(this))
+                Chessboard[X + 1, Y + (1 * Direction)] != null &&
+                Chessboard[X + 1, Y + (1 * Direction)].IsEnemy(this))
             {
-                movements.Add(new Point(X + 1, Y + 1));
+                movements.Add(new Point(X + 1, Y + (1 * Direction)));
             }
 
-            if (Chessboard[Position.X,Position.Y+1] == null)
+            if (Chessboard[Position.X,Position.Y+ (1 * Direction)] == null)
             {
-                movements.Add(new Point(X, Y + 1));
-                if (!Moved && Chessboard[Position.X, Position.Y + 2] == null)
-                    movements.Add(new Point(X, Y + 2));
+                movements.Add(new Point(X, Y + (1 * Direction)));
+                if (!Moved && Chessboard[Position.X, Position.Y + (2 * Direction)] == null)
+                    movements.Add(new Point(X, Y + (2 * Direction)));
             }
             movements.Sort();
 
