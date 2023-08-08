@@ -17,29 +17,8 @@ while (true)
 
 
 
-    Chesspiece piece;
+    Chesspiece piece = CollectCMDInput.SelectPiece(board,turn);
 
-    while (true) 
-    {
-        
-        try
-        {
-            string cmdAnswer = Console.ReadLine();
-            if (cmdAnswer == "") Console.WriteLine("Please, inform us the piece you wanna move");
-
-            Point position = ConvertP.StrToPoint(cmdAnswer);
-            piece = board.board[position.X, position.Y];
-
-            if (piece == null) Console.WriteLine("You selected a empty space, please select a valid space (A to H; 1 to 8)");
-            else if (piece.Color != turn) Console.WriteLine($"You selected the enemy {piece.Name}");
-            else break;
-        } 
-
-        catch (Exception e)
-        {
-            Console.WriteLine("The position informed is invalid, please inform the piece wanted in the format: A1");
-        }
-    }
     Console.Clear();
 
     board.Printboard(piece.Move(board.board));
