@@ -10,7 +10,6 @@ namespace Xadrez2.Entities
     {
         internal bool Moved { get; set; }
 
-        public Point Position { get; set; }
         public ConsoleColor Color { get; set; }
 
         public string Name { get; set; }
@@ -26,8 +25,19 @@ namespace Xadrez2.Entities
             if (piece.Color != this.Color) return true;
             else return false;
         }
-
+        
         public abstract List<Point> Move(Chesspiece[,] Chessboard);
+
+        private Point _position;
+
+        public Point Position
+        {
+            get { return _position; }
+            set { 
+                _position.X = value.X;
+                _position.Y = value.Y;
+            }
+        }
 
     }
 }

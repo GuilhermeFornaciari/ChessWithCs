@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Xadrez2.Entities.Pieces;
+using Xadrez2.Services;
 
 namespace Xadrez2.Entities
 {
@@ -14,6 +16,10 @@ namespace Xadrez2.Entities
 
         private Dictionary<bool, ConsoleColor> BgColors { get; set; }
 
+        public List<String> CapturedPiecesRed { get; set; }
+
+        public List<String> CapturedPiecesBlue { get; set; }
+
         public Chessboard()
         {
             board = new Chesspiece[8, 8];
@@ -22,7 +28,12 @@ namespace Xadrez2.Entities
                 {  true,ConsoleColor.Gray },
                 { false,ConsoleColor.DarkGray }
             };
-            /*
+            CapturedPiecesRed = new List<String>();
+            CapturedPiecesBlue = new List<String>();
+
+
+
+            
             for (int i = 0; i < 8; i++)
             {
                 board[i, 1] = new Pawn(new Point(i,1), ConsoleColor.DarkRed);
@@ -32,13 +43,9 @@ namespace Xadrez2.Entities
             {
                 board[i, 6] = new Pawn(new Point(i,6), ConsoleColor.DarkBlue);
             }
-            */
-
-
-            board[3, 3] = new Pawn(new Point(3, 3), ConsoleColor.DarkRed);
-            board[2, 4] = new Pawn(new Point(2, 4), ConsoleColor.DarkRed);
-
-            board[4, 4] = new Pawn(new Point(4, 4), ConsoleColor.DarkBlue);
+            
+            
+            
 
 
 
@@ -61,8 +68,54 @@ namespace Xadrez2.Entities
                 Console.Write("  ");
             }
         }
-        public void Printboard(List<Point>? attacks)
+        public bool MovePiece(Point piecePosition)
         {
+            Chesspiece Piece = board[piecePosition.X, piecePosition.Y];
+            List<Point> AttackPoints = Piece.Move(board);
+
+            Printboard(AttackPoints);
+            Console.WriteLine(AttackPoints);
+            string PlayerMove = CollectCMDInput.MovePiece(AttackPoints);
+            if (PlayerMove != "")
+            {
+                Point NewPosition = ConvertP.StrToPoint(PlayerMove);
+                CapturePiece(Piece, NewPosition);
+                Piece.Moved = true;
+
+                board[NewPosition.X, NewPosition.Y] = Piece;
+                board[Piece.Position.X, Piece.Position.Y] = null;
+
+                Piece.Position = NewPosition;
+                
+                return false;
+
+
+            }
+            else return true;
+
+
+        }
+
+        private void CapturePiece(Chesspiece piece, Point newPosition)
+        {
+            if (board[newPosition.X, newPosition.Y] != null)
+            {
+                if (piece.Color == ConsoleColor.DarkBlue) 
+                    CapturedPiecesBlue.Add(board[newPosition.X, newPosition.Y].Name);
+                else 
+                    CapturedPiecesRed .Add(board[newPosition.X, newPosition.Y].Name);
+            }
+        }
+
+
+
+        public void Printboard(List<Point>? attacksList)
+        {
+            Console.Clear();
+
+            List<Point>? attacks = null;
+            if (attacksList != null) attacks = new List<Point>(attacksList);
+
             bool Color = false;
             Console.ForegroundColor = ConsoleColor.Black;
             for (int y = 0; y < board.GetLength(1); y++)
@@ -72,7 +125,7 @@ namespace Xadrez2.Entities
                     Console.BackgroundColor = BgColors[Color];
                     Color = !Color;
 
-                    if (board[x,y] != null) Console.ForegroundColor = board[x, y].Color;
+                    if (board[x, y] != null) Console.ForegroundColor = board[x, y].Color;
 
                     if (attacks != null && attacks.Count > 0)
                     {

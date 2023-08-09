@@ -15,24 +15,17 @@ while (true)
 
     Console.WriteLine("What piece do you wanna move?");
 
+    Point piecePosition = CollectCMDInput.SelectPiece(board,turn);
+
+    bool skipped = board.MovePiece(piecePosition);
+
+    if (!skipped)
+    {
+        if (turn == ConsoleColor.DarkRed) turn = ConsoleColor.DarkBlue;
+        else turn = ConsoleColor.DarkRed;
+    }
 
 
-    Chesspiece piece = CollectCMDInput.SelectPiece(board,turn);
-
-    Console.Clear();
-
-    board.Printboard(piece.Move(board.board));
-
-    Console.ReadLine();
-
-
-
-
-
-
-
-    if (turn == ConsoleColor.DarkBlue) turn = ConsoleColor.DarkRed;
-    if (turn == ConsoleColor.DarkRed) turn = ConsoleColor.DarkBlue;
 
 }
 
