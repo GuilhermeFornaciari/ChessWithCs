@@ -50,11 +50,6 @@ namespace Xadrez2.Entities.Pieces
                     movements.Add(new Point(X, Y + (2 * Direction)));
             }
             movements.Sort();
-
-            Console.WriteLine("Posição do peão: " + Position );
-            foreach (Point p in movements) Console.Write(p + ",");
-            Console.WriteLine();
-
             return movements;
         }
 

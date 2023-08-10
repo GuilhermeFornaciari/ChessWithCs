@@ -133,8 +133,12 @@ namespace Xadrez2.Entities
             Console.Clear();
 
             List<Point>? attacks = null;
-            if (attacksList != null) attacks = new List<Point>(attacksList);
+            if (attacksList != null)
+            { 
+                attacks = new List<Point>(attacksList);
+                attacks.Sort();
 
+            }
             string ColorInstensity = "";
             string TypeColor = "Normal";
 
