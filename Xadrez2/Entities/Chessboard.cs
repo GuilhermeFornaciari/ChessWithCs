@@ -57,11 +57,13 @@ namespace Xadrez2.Entities
             board[7, 7] = new Rook(new Point(7, 7), ConsoleColor.DarkBlue);
             */
 
+            /*
             board[1, 0] = new Knight(new Point(1, 0), ConsoleColor.DarkRed);
-            board[6, 0] = new Knight(new Point(6, 0), ConsoleColor.DarkBlue);
+            board[6, 0] = new Knight(new Point(6, 0), ConsoleColor.DarkRed);
 
-
-
+            board[1, 7] = new Knight(new Point(1, 7), ConsoleColor.DarkRed);
+            board[6, 7] = new Knight(new Point(6, 7), ConsoleColor.DarkRed);
+            */
 
 
 

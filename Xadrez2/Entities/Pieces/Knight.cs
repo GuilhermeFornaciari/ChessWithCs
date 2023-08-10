@@ -10,11 +10,9 @@ namespace Xadrez2.Entities.Pieces
     internal class Knight : Chesspiece
     {
 
-        private int Direction { get; set; }
         public Knight(Point position, ConsoleColor color) : base(position, color) 
         {
             Moved = false;
-            if (color == ConsoleColor.DarkRed) Direction = 1; else Direction = -1;
             Name = "Knight";
         }
         public override string ToString()

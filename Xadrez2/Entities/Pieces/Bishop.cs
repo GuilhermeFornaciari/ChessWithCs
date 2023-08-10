@@ -10,11 +10,9 @@ namespace Xadrez2.Entities.Pieces
     internal class Bishop : Chesspiece
     {
 
-        private int Direction { get; set; }
         public Bishop(Point position, ConsoleColor color) : base(position, color) 
         {
             Moved = false;
-            if (color == ConsoleColor.DarkRed) Direction = 1; else Direction = -1;
             Name = "Bishop";
         }
         public override string ToString()
