@@ -54,12 +54,8 @@ namespace Xadrez2.Entities.Pieces
                 else square.Y += direction;
 
                 while (square.X <= 7 && square.X >= 0 &&
-                       square.Y <= 7 && square.Y >= 0
-                    ) 
+                       square.Y <= 7 && square.Y >= 0)
                 {
-
-
-                    Console.WriteLine(square);
                     if (Chessboard[square.X, square.Y] == null)
                         movements.Add(square);
                     else if (Chessboard[square.X, square.Y].IsEnemy(this))
@@ -72,9 +68,7 @@ namespace Xadrez2.Entities.Pieces
                     else square.Y += direction;
                 }
             }
-
             movements.Sort();
-
             return movements;
         }
 

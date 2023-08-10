@@ -14,7 +14,7 @@ namespace Xadrez2.Entities
     {
         public Chesspiece[,] board { get; private set; }
 
-        private Dictionary<bool, ConsoleColor> BgColors { get; set; }
+        private Dictionary<string, ConsoleColor> BgColors { get; set; }
 
         public List<String> CapturedPiecesRed { get; set; }
 
@@ -23,10 +23,14 @@ namespace Xadrez2.Entities
         public Chessboard()
         {
             board = new Chesspiece[8, 8];
-            BgColors = new Dictionary<bool, ConsoleColor>
+            BgColors = new Dictionary<string, ConsoleColor>
             {
-                {  true,ConsoleColor.Gray },
-                { false,ConsoleColor.DarkGray }
+                { "Normal",ConsoleColor.Gray },
+                { "DarkNormal",ConsoleColor.DarkGray },
+                { "Attacked",ConsoleColor.Green },
+                { "DarkAttacked",ConsoleColor.DarkGreen },
+
+
             };
             CapturedPiecesRed = new List<String>();
             CapturedPiecesBlue = new List<String>();
@@ -105,10 +109,7 @@ namespace Xadrez2.Entities
                 Piece.Position = NewPosition;
 
                 return "No";
-
-
             }
-
             else return "Skipped";
 
 
@@ -134,14 +135,15 @@ namespace Xadrez2.Entities
             List<Point>? attacks = null;
             if (attacksList != null) attacks = new List<Point>(attacksList);
 
-            bool Color = false;
+            string ColorInstensity = "";
+            string TypeColor = "Normal";
+
             Console.ForegroundColor = ConsoleColor.Black;
             for (int y = 0; y < board.GetLength(1); y++)
             {
                 for (int x = 0; x < board.GetLength(0); x++)
                 {
-                    Console.BackgroundColor = BgColors[Color];
-                    Color = !Color;
+                    ColorInstensity = ColorInstensity == ""? "Dark" : "";
 
                     if (board[x, y] != null) Console.ForegroundColor = board[x, y].Color;
 
@@ -149,16 +151,19 @@ namespace Xadrez2.Entities
                     {
                         if (attacks[0].X == x && attacks[0].Y == y)
                         {
-                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            TypeColor = "Attacked";
                             attacks.RemoveAt(0);
                         }
                     }
+                    Console.BackgroundColor = BgColors[ColorInstensity + TypeColor];
                     printPositonName(board[x, y]);
+                    TypeColor = "Normal";
                 }
                 ResetCmd();
                 Console.WriteLine((y + 1) + " ");
                 Console.ForegroundColor = ConsoleColor.Black;
-                Color = !Color;
+                ColorInstensity = ColorInstensity == ""? "Dark" : "";
+
             }
             ResetCmd();
 
@@ -173,13 +178,3 @@ namespace Xadrez2.Entities
 
     }
 }
-
-/*
-bool attacked = false;
-foreach (string attack in attacks)
-{
-    int positionY = letters.IndexOf(attack.Substring(0, 1));
-    if (int.Parse(attack.Substring(1)) == x && positionY == y)
-        attacked = true;
-}
-*/
