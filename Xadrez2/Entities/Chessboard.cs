@@ -33,7 +33,7 @@ namespace Xadrez2.Entities
 
 
 
-            
+            /*
             for (int i = 0; i < 8; i++)
             {
                 board[i, 1] = new Pawn(new Point(i,1), ConsoleColor.DarkRed);
@@ -43,9 +43,24 @@ namespace Xadrez2.Entities
             {
                 board[i, 6] = new Pawn(new Point(i,6), ConsoleColor.DarkBlue);
             }
-            
-            
-            
+            */
+
+            /*
+            board[0, 0] = new Rook(new Point(0, 0), ConsoleColor.DarkRed);
+            board[7, 0] = new Rook(new Point(7, 0), ConsoleColor.DarkRed);
+
+            board[0, 7] = new Rook(new Point(0, 7), ConsoleColor.DarkBlue);
+            board[7, 7] = new Rook(new Point(7, 7), ConsoleColor.DarkBlue);
+            */
+
+            board[5, 5] = new Rook(new Point(5, 5), ConsoleColor.DarkRed);
+            board[4, 4] = new Rook(new Point(4, 4), ConsoleColor.DarkBlue);
+
+
+
+
+
+
 
 
 
@@ -68,13 +83,15 @@ namespace Xadrez2.Entities
                 Console.Write("  ");
             }
         }
-        public bool MovePiece(Point piecePosition)
+        public string MovePiece(Point piecePosition)
         {
             Chesspiece Piece = board[piecePosition.X, piecePosition.Y];
             List<Point> AttackPoints = Piece.Move(board);
 
+            if (AttackPoints.Count == 0 ) return "NoMoves";
+
+
             Printboard(AttackPoints);
-            Console.WriteLine(AttackPoints);
             string PlayerMove = CollectCMDInput.MovePiece(AttackPoints);
             if (PlayerMove != "")
             {
@@ -86,12 +103,13 @@ namespace Xadrez2.Entities
                 board[Piece.Position.X, Piece.Position.Y] = null;
 
                 Piece.Position = NewPosition;
-                
-                return false;
+
+                return "No";
 
 
             }
-            else return true;
+
+            else return "Skipped";
 
 
         }
