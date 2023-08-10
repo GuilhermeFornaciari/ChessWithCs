@@ -68,6 +68,7 @@ namespace Xadrez2.Entities.Pieces
                     else square.Y += direction;
                 }
             }
+            movements.Sort();
             return movements;
         }
 

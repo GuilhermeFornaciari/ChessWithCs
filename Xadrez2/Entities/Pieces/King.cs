@@ -29,26 +29,6 @@ namespace Xadrez2.Entities.Pieces
             int X = Position.X;
             int Y = Position.Y;
 
-            if (X != 0 &&
-                Chessboard[X - 1, Y + (1 * Direction)] != null && 
-                Chessboard[X - 1, Y + (1 * Direction)].IsEnemy(this))
-            {
-                movements.Add(new Point(X-1, Y + (1 * Direction)));
-            }
-
-            if (X != 7 &&
-                Chessboard[X + 1, Y + (1 * Direction)] != null &&
-                Chessboard[X + 1, Y + (1 * Direction)].IsEnemy(this))
-            {
-                movements.Add(new Point(X + 1, Y + (1 * Direction)));
-            }
-
-            if (Chessboard[Position.X,Position.Y+ (1 * Direction)] == null)
-            {
-                movements.Add(new Point(X, Y + (1 * Direction)));
-                if (!Moved && Chessboard[Position.X, Position.Y + (2 * Direction)] == null)
-                    movements.Add(new Point(X, Y + (2 * Direction)));
-            }
             movements.Sort();
             return movements;
         }

@@ -29,33 +29,26 @@ namespace Xadrez2.Entities.Pieces
             int X = Position.X;
             int Y = Position.Y;
 
-            if (X != 0 &&
-                Chessboard[X - 1, Y + (1 * Direction)] != null && 
-                Chessboard[X - 1, Y + (1 * Direction)].IsEnemy(this))
-            {
-                movements.Add(new Point(X-1, Y + (1 * Direction)));
-            }
+            int[] Xpossibilities = new int[] {2,-2,1,-1};
+            int[] Ypossibilities = new int[] {2,-2,1,-1};
 
-            if (X != 7 &&
-                Chessboard[X + 1, Y + (1 * Direction)] != null &&
-                Chessboard[X + 1, Y + (1 * Direction)].IsEnemy(this))
+            foreach (int possibilityX in Xpossibilities)
             {
-                movements.Add(new Point(X + 1, Y + (1 * Direction)));
-            }
+                foreach (int possibilityY in Ypossibilities)
+                {
+                    if ((possibilityX > 0 ? possibilityX : -possibilityX) == (possibilityY > 0 ? possibilityY : -possibilityY)) continue;
+                    if ((X + possibilityX) < 0 || (X + possibilityX) > 7) continue;
+                    if ((Y + possibilityY) < 0 || (Y + possibilityY) > 7) continue;
 
-            if (Chessboard[Position.X,Position.Y+ (1 * Direction)] == null)
-            {
-                movements.Add(new Point(X, Y + (1 * Direction)));
-                if (!Moved && Chessboard[Position.X, Position.Y + (2 * Direction)] == null)
-                    movements.Add(new Point(X, Y + (2 * Direction)));
+                    Chesspiece square = Chessboard[X + possibilityX, Y + possibilityY];
+                    if (square == null || 
+                        Chessboard[X + possibilityX, Y + possibilityY].IsEnemy(this)) 
+                        movements.Add(new Point(X + possibilityX, Y + possibilityY));
+                }
             }
             movements.Sort();
             return movements;
         }
-
-
-
     }
-
     }
 

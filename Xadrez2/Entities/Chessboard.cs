@@ -57,8 +57,11 @@ namespace Xadrez2.Entities
             board[7, 7] = new Rook(new Point(7, 7), ConsoleColor.DarkBlue);
             */
 
-            board[5, 5] = new Rook(new Point(5, 5), ConsoleColor.DarkRed);
-            board[4, 4] = new Rook(new Point(4, 4), ConsoleColor.DarkBlue);
+            board[1, 0] = new Knight(new Point(1, 0), ConsoleColor.DarkRed);
+            board[6, 0] = new Knight(new Point(6, 0), ConsoleColor.DarkBlue);
+
+
+
 
 
 
@@ -133,12 +136,8 @@ namespace Xadrez2.Entities
             Console.Clear();
 
             List<Point>? attacks = null;
-            if (attacksList != null)
-            { 
-                attacks = new List<Point>(attacksList);
-                attacks.Sort();
+            if (attacksList != null) attacks = new List<Point>(attacksList);
 
-            }
             string ColorInstensity = "";
             string TypeColor = "Normal";
 
