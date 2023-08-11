@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xadrez2.Entities;
+using Xadrez2.Services;
 
 namespace Xadrez2.Entities.Pieces
 {
@@ -11,28 +12,16 @@ namespace Xadrez2.Entities.Pieces
     {
         public Queen(Point position, ConsoleColor color) : base(position, color) 
         {
-            Moved = false;
             Name = "Queen";
+            XPossibilities = new int[3] { 1, -1, 0 };
+            YPossibilities = new int[3] { 1, -1, 0 };
         }
         public override string ToString()
         {
             return "Q";
         }
-
-        public override List<Point> Move(Chesspiece[,] Chessboard)
-        {
-            List < Point > movements = new List < Point >();
-
-            int X = Position.X;
-            int Y = Position.Y;
-
-            movements.Sort();
-            return movements;
-        }
-
-
-
+        internal override bool continueCondition(int possibilityX, int possibilityY)
+        { return false; }
     }
-
     }
 

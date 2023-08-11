@@ -13,35 +13,21 @@ namespace Xadrez2.Entities.Pieces
 
         public Knight(Point position, ConsoleColor color) : base(position, color) 
         {
-            Moved = false;
             Name = "Knight";
+
+            XPossibilities = new int[4] { 2, -2, 1, -1 };
+            YPossibilities = new int[4] { 2, -2, 1, -1 };
+            OnlyOne = true;
+
         }
         public override string ToString()
         {
-            return "K";
+            return "C";
         }
+        internal override bool continueCondition(int possibilityX, int possibilityY)
+        { return (ConvertP.PositiveOf(possibilityX)) == (ConvertP.PositiveOf(possibilityY)); }
 
-        public override List<Point> Move(Chesspiece[,] Chessboard)
-        {
-            List < Point > movements = new List < Point >();
-
-            int X = Position.X;
-            int Y = Position.Y;
-
-            int[] Xpossibilities = new int[] {2,-2,1,-1};
-            int[] Ypossibilities = new int[] {2,-2,1,-1};
-
-            foreach (int possibilityX in Xpossibilities)
-            {
-                foreach (int possibilityY in Ypossibilities)
-                {
-                    if ((ConvertP.PositiveOf(possibilityX)) == (ConvertP.PositiveOf(possibilityY))) continue;
-                    movements.AddRange(LinearMovement(possibilityX, possibilityY, Chessboard,true));
-                }
-            }
-            movements.Sort();
-            return movements;
-        }
+        
     }
     }
 

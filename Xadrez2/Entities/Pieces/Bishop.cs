@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xadrez2.Entities;
+using Xadrez2.Services;
 
 namespace Xadrez2.Entities.Pieces
 {
@@ -12,39 +13,16 @@ namespace Xadrez2.Entities.Pieces
 
         public Bishop(Point position, ConsoleColor color) : base(position, color) 
         {
-            Moved = false;
             Name = "Bishop";
+            XPossibilities = new int[2] { 1, -1};
+            YPossibilities = new int[2] { 1, -1};
         }
         public override string ToString()
         {
             return "B";
         }
-
-        public override List<Point> Move(Chesspiece[,] Chessboard)
-        {
-            List < Point > movements = new List < Point >();
-
-            int X = Position.X;
-            int Y = Position.Y;
-
-
-            int[] Xpossibilities = new int[] { 1, -1};
-            int[] Ypossibilities = new int[] { 1, -1 };
-
-            foreach (int possibilityX in Xpossibilities)
-            {
-                foreach (int possibilityY in Ypossibilities)
-                {
-                    movements.AddRange(LinearMovement(possibilityX, possibilityY, Chessboard,null));
-                }
-            }
-            movements.Sort();
-            return movements;
-        }
-
-
-
+        internal override bool continueCondition(int possibilityX, int possibilityY)
+        { return false; }
     }
-
     }
 

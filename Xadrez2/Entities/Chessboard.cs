@@ -37,7 +37,7 @@ namespace Xadrez2.Entities
 
 
 
-            /*
+            
             for (int i = 0; i < 8; i++)
             {
                 board[i, 1] = new Pawn(new Point(i,1), ConsoleColor.DarkRed);
@@ -47,8 +47,7 @@ namespace Xadrez2.Entities
             {
                 board[i, 6] = new Pawn(new Point(i,6), ConsoleColor.DarkBlue);
             }
-            */
-
+            
 
 
             board[0, 0] = new Rook(new Point(0, 0), ConsoleColor.DarkRed);
@@ -66,6 +65,7 @@ namespace Xadrez2.Entities
             board[6, 7] = new Knight(new Point(6, 7), ConsoleColor.DarkBlue);
             
 
+
             board[2, 0] = new Bishop(new Point(2, 0), ConsoleColor.DarkRed);
             board[5, 0] = new Bishop(new Point(5, 0), ConsoleColor.DarkRed);
 
@@ -73,6 +73,12 @@ namespace Xadrez2.Entities
             board[5, 7] = new Bishop(new Point(5, 7), ConsoleColor.DarkBlue);
 
 
+
+            board[3, 0] = new Queen(new Point(3, 0), ConsoleColor.DarkRed);
+            board[4, 7] = new Queen(new Point(4, 7), ConsoleColor.DarkBlue);
+
+            board[4, 0] = new King(new Point(4, 0), ConsoleColor.DarkRed);
+            board[3, 7] = new King(new Point(3, 7), ConsoleColor.DarkBlue);
 
 
 

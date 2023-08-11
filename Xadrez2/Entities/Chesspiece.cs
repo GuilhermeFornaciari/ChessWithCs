@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xadrez2.Services;
 
 namespace Xadrez2.Entities
 {
     internal abstract class Chesspiece
     {
         internal bool Moved { get; set; }
-
         public ConsoleColor Color { get; set; }
-
         public string Name { get; set; }
-        public Chesspiece(Point position, ConsoleColor color) 
+        internal int[] XPossibilities { get; set; }
+        internal int[] YPossibilities { get; set; }
+        public Chesspiece(Point position, ConsoleColor color)
         {
             Position = position;
             Color = color;
-
+            Moved = false;
         }
 
         public bool IsEnemy(Chesspiece piece)
@@ -25,8 +27,6 @@ namespace Xadrez2.Entities
             if (piece.Color != this.Color) return true;
             else return false;
         }
-        
-        public abstract List<Point> Move(Chesspiece[,] Chessboard);
 
         private Point _position;
 
@@ -38,28 +38,46 @@ namespace Xadrez2.Entities
                 _position.Y = value.Y;
             }
         }
-
-        internal List<Point> LinearMovement(int possibilityX, int possibilityY, Chesspiece[,] chessboard, bool? knight)
+        internal abstract bool continueCondition(int possibilityX, int possibilityY);
+        internal virtual List<Point> Move(Chesspiece[,] chessboard)
         {
-            List < Point > movements = new List < Point >();
-            Point square = new Point(Position.X + possibilityX, Position.Y + possibilityY);
-
-            while (square.X <= 7 && square.X >= 0 &&
-                   square.Y <= 7 && square.Y >= 0)
+            List<Point> movements = new List<Point>();
+            foreach (int possibilityX in XPossibilities)
             {
-                if (chessboard[square.X, square.Y] != null)
+                foreach (int possibilityY in YPossibilities)
                 {
-                    if (chessboard[square.X, square.Y].IsEnemy(this)) movements.Add(square);
-                    break;
-                }
-                movements.Add(square);
-                square.X += possibilityX;
-                square.Y += possibilityY;
+                    if (continueCondition(possibilityX, possibilityY)) continue;
 
-                if (knight != null) break;
+                    Point square = new Point(Position.X + possibilityX, Position.Y + possibilityY);
+                    while (square.X <= 7 && square.X >= 0 &&
+                           square.Y <= 7 && square.Y >= 0)
+                    {
+                        if (chessboard[square.X, square.Y] != null)
+                        {
+                            if (chessboard[square.X, square.Y].IsEnemy(this)) movements.Add(square);
+                            break;
+                        }
+                        movements.Add(square);
+                        square.X += possibilityX;
+                        square.Y += possibilityY;
+
+                        if (OnlyOne) break;
+                    }
+                }
             }
+            movements.Sort();
             return movements;
         }
+
+        private bool _onlyOne;
+        [DefaultValue(false)]
+
+        public bool OnlyOne
+        {
+            get { return _onlyOne; }
+            set { _onlyOne = value; }
+        }
+
 
 
     }

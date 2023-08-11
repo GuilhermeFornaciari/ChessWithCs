@@ -9,20 +9,25 @@ namespace Xadrez2.Entities.Pieces
 {
     internal class Pawn : Chesspiece
     {
-
-        private int Direction { get; set; }
+        public int Direction { get; set; }
         public Pawn(Point position, ConsoleColor color) : base(position, color) 
         {
-            Moved = false;
+            //int Direction;
             if (color == ConsoleColor.DarkRed) Direction = 1; else Direction = -1;
+            XPossibilities = new int[3] { 1, -1, 0 };
+            YPossibilities = new int[1] { Direction };
             Name = "Pawn";
+            OnlyOne = true;
         }
         public override string ToString()
         {
             return "P";
         }
-
-        public override List<Point> Move(Chesspiece[,] Chessboard)
+        internal override bool continueCondition(int possibilityX, int possibilityY)
+        {
+            return false;
+        }
+        internal override List<Point> Move(Chesspiece[,] chessboard) 
         {
             List < Point > movements = new List < Point >();
 
@@ -30,23 +35,23 @@ namespace Xadrez2.Entities.Pieces
             int Y = Position.Y;
 
             if (X != 0 &&
-                Chessboard[X - 1, Y + (1 * Direction)] != null && 
-                Chessboard[X - 1, Y + (1 * Direction)].IsEnemy(this))
+                chessboard[X - 1, Y + (1 * Direction)] != null && 
+                chessboard[X - 1, Y + (1 * Direction)].IsEnemy(this))
             {
                 movements.Add(new Point(X-1, Y + (1 * Direction)));
             }
 
             if (X != 7 &&
-                Chessboard[X + 1, Y + (1 * Direction)] != null &&
-                Chessboard[X + 1, Y + (1 * Direction)].IsEnemy(this))
+                chessboard[X + 1, Y + (1 * Direction)] != null &&
+                chessboard[X + 1, Y + (1 * Direction)].IsEnemy(this))
             {
                 movements.Add(new Point(X + 1, Y + (1 * Direction)));
             }
 
-            if (Chessboard[Position.X,Position.Y+ (1 * Direction)] == null)
+            if (chessboard[Position.X,Position.Y+ (1 * Direction)] == null)
             {
                 movements.Add(new Point(X, Y + (1 * Direction)));
-                if (!Moved && Chessboard[Position.X, Position.Y + (2 * Direction)] == null)
+                if (!Moved && chessboard[Position.X, Position.Y + (2 * Direction)] == null)
                     movements.Add(new Point(X, Y + (2 * Direction)));
             }
             movements.Sort();
