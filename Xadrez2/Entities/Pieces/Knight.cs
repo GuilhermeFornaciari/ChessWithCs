@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xadrez2.Entities;
+using Xadrez2.Services;
 
 namespace Xadrez2.Entities.Pieces
 {
@@ -34,14 +35,8 @@ namespace Xadrez2.Entities.Pieces
             {
                 foreach (int possibilityY in Ypossibilities)
                 {
-                    if ((possibilityX > 0 ? possibilityX : -possibilityX) == (possibilityY > 0 ? possibilityY : -possibilityY)) continue;
-                    if ((X + possibilityX) < 0 || (X + possibilityX) > 7) continue;
-                    if ((Y + possibilityY) < 0 || (Y + possibilityY) > 7) continue;
-
-                    Chesspiece square = Chessboard[X + possibilityX, Y + possibilityY];
-                    if (square == null || 
-                        Chessboard[X + possibilityX, Y + possibilityY].IsEnemy(this)) 
-                        movements.Add(new Point(X + possibilityX, Y + possibilityY));
+                    if ((ConvertP.PositiveOf(possibilityX)) == (ConvertP.PositiveOf(possibilityY))) continue;
+                    movements.AddRange(LinearMovement(possibilityX, possibilityY, Chessboard,true));
                 }
             }
             movements.Sort();

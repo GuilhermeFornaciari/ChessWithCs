@@ -24,7 +24,10 @@ namespace Xadrez2.Services
             string X = letters[Position.X];
             return X + (Position.Y +1);
         }
-
+        public static int PositiveOf(int number) 
+        {
+            return number > 0 ? number : -number;
+        }
 
     }
 }

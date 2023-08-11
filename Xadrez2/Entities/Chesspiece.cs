@@ -39,5 +39,28 @@ namespace Xadrez2.Entities
             }
         }
 
+        internal List<Point> LinearMovement(int possibilityX, int possibilityY, Chesspiece[,] chessboard, bool? knight)
+        {
+            List < Point > movements = new List < Point >();
+            Point square = new Point(Position.X + possibilityX, Position.Y + possibilityY);
+
+            while (square.X <= 7 && square.X >= 0 &&
+                   square.Y <= 7 && square.Y >= 0)
+            {
+                if (chessboard[square.X, square.Y] != null)
+                {
+                    if (chessboard[square.X, square.Y].IsEnemy(this)) movements.Add(square);
+                    break;
+                }
+                movements.Add(square);
+                square.X += possibilityX;
+                square.Y += possibilityY;
+
+                if (knight != null) break;
+            }
+            return movements;
+        }
+
+
     }
 }

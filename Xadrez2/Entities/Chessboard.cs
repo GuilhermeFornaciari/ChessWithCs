@@ -49,24 +49,28 @@ namespace Xadrez2.Entities
             }
             */
 
-            /*
+
+
             board[0, 0] = new Rook(new Point(0, 0), ConsoleColor.DarkRed);
             board[7, 0] = new Rook(new Point(7, 0), ConsoleColor.DarkRed);
 
             board[0, 7] = new Rook(new Point(0, 7), ConsoleColor.DarkBlue);
             board[7, 7] = new Rook(new Point(7, 7), ConsoleColor.DarkBlue);
-            */
+            
 
-            /*
+            
             board[1, 0] = new Knight(new Point(1, 0), ConsoleColor.DarkRed);
             board[6, 0] = new Knight(new Point(6, 0), ConsoleColor.DarkRed);
 
-            board[1, 7] = new Knight(new Point(1, 7), ConsoleColor.DarkRed);
-            board[6, 7] = new Knight(new Point(6, 7), ConsoleColor.DarkRed);
-            */
+            board[1, 7] = new Knight(new Point(1, 7), ConsoleColor.DarkBlue);
+            board[6, 7] = new Knight(new Point(6, 7), ConsoleColor.DarkBlue);
+            
 
+            board[2, 0] = new Bishop(new Point(2, 0), ConsoleColor.DarkRed);
+            board[5, 0] = new Bishop(new Point(5, 0), ConsoleColor.DarkRed);
 
-
+            board[2, 7] = new Bishop(new Point(2, 7), ConsoleColor.DarkBlue);
+            board[5, 7] = new Bishop(new Point(5, 7), ConsoleColor.DarkBlue);
 
 
 
@@ -92,6 +96,8 @@ namespace Xadrez2.Entities
                 Console.Write("  ");
             }
         }
+
+
         public string MovePiece(Point piecePosition)
         {
             Chesspiece Piece = board[piecePosition.X, piecePosition.Y];

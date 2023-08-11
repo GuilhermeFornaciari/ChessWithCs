@@ -27,6 +27,17 @@ namespace Xadrez2.Entities.Pieces
             int X = Position.X;
             int Y = Position.Y;
 
+
+            int[] Xpossibilities = new int[] { 1, -1};
+            int[] Ypossibilities = new int[] { 1, -1 };
+
+            foreach (int possibilityX in Xpossibilities)
+            {
+                foreach (int possibilityY in Ypossibilities)
+                {
+                    movements.AddRange(LinearMovement(possibilityX, possibilityY, Chessboard,null));
+                }
+            }
             movements.Sort();
             return movements;
         }
