@@ -68,17 +68,12 @@ namespace Xadrez2.Entities
             movements.Sort();
             return movements;
         }
-
         private bool _onlyOne;
         [DefaultValue(false)]
-
         public bool OnlyOne
         {
             get { return _onlyOne; }
             set { _onlyOne = value; }
         }
-
-
-
     }
 }
